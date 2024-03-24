@@ -23,6 +23,6 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build -c Release --no-restore
     - name: Run
-      run: dotnet run --project ./Json-Benchmarks/Json-Benchmarks.csproj --no-build
+      run: dotnet run -c Release --project ./Json-Benchmarks/Json-Benchmarks.csproj --no-build
