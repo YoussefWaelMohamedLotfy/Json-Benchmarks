@@ -25,4 +25,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Run
-      run: dotnet run ./Json-Benchmarks/Json-Benchmarks.csproj --no-build
+      run: dotnet run --project ./Json-Benchmarks/Json-Benchmarks.csproj --no-build
