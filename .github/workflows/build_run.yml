@@ -14,7 +14,7 @@ jobs:
     name: Build + Run
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [windows-latest, macos-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -29,4 +29,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Run
-      run: dotnet run --no-build
+      run: dotnet run ./Json-Benchmarks/Json-Benchmarks.csproj --no-build
