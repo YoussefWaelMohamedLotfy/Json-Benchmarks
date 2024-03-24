@@ -1,0 +1,9 @@
+namespace Json_Benchmarks
+
+enum BondGender
+{
+    None,
+    Male,
+	Female,
+	Other
+}
