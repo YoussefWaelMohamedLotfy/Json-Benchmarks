@@ -1,13 +1,13 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Bond;
 using Bond.Protocols;
-using System.Text;
+using Bond;
 using System.Text.Json;
+using Bond.IO.Safe;
 
 namespace Json_Benchmarks;
 
 [MemoryDiagnoser]
-public class SerializationBenchmarks
+public class BinarySerializationBenchmarks
 {
     private Person _person = new()
     {
@@ -26,22 +26,20 @@ public class SerializationBenchmarks
         PhoneNumbers = ["123-456-7890", "123-456-7891", "123-456-7892"]
     };
 
-    private StringBuilder jsonString = new();
+    private OutputBuffer output = new();
 
     [Benchmark]
-    public string SystemTextJson_Ser() => JsonSerializer.Serialize(_person);
+    public byte[] SystemTextJson_Ser() => JsonSerializer.SerializeToUtf8Bytes(_person);
 
     [Benchmark]
-    public string SystemTextJson_SerSG() => JsonSerializer.Serialize(_person, PersonJsonContext.Default.Person);
+    public byte[] SystemTextJson_SerSG() => JsonSerializer.SerializeToUtf8Bytes(_person, PersonJsonContext.Default.Person);
 
     [Benchmark]
-    public string Bond_Ser()
+    public byte[] Bond_Ser()
     {
-        SimpleJsonWriter jsonWriter = new(new StringWriter(jsonString));
-        Serialize.To(jsonWriter, _bondPerson);
-
-        jsonWriter.Flush();
-        return jsonString.ToString();
+        OutputBuffer output = new();
+        CompactBinaryWriter<OutputBuffer> writer = new(output);
+        Serialize.To(writer, _bondPerson);
+        return output.Data.Array;
     }
-
 }

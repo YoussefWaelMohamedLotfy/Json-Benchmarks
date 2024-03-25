@@ -1,4 +1,4 @@
 ﻿using BenchmarkDotNet.Running;
 using Json_Benchmarks;
 
-BenchmarkRunner.Run<SerializationBenchmarks>();
+BenchmarkRunner.Run<BinarySerializationBenchmarks>();
